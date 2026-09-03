@@ -14,7 +14,9 @@ This public repository preserves a clean review path:
 2. `chore: import pre WebMCP integration baseline` records the relevant pre WebMCP application boundary.
 3. `feat: add WebMCP challenge extension` adds the challenge implementation, tests, evals, and verification workflow.
 
-The private production repository contains unrelated operational history and historical database material, so it is not published. This mirror contains the WebMCP implementation, the real production adapters used by the tools, representative domain data for deterministic verification, and the tests needed to inspect the challenge work.
+The private production repository contains unrelated operational history and historical backup material, so it is not published. This repository is the reviewable challenge source. It contains a standalone WebMCP verification application, the actual WebMCP tool contracts, production facing adapters used by those tools, deterministic tests, eval cases, provenance documentation, and configuration templates. Production credentials are never committed.
+
+The live site and this repository contain the same WebMCP tool definitions submitted for judging.
 
 The pre extension production source boundary is private commit `0deee9d2f2395145fa8bc5b41d53101155339d8f`.
 
@@ -77,16 +79,16 @@ document.modelContext
 - `services/webmcp.ts`: WebMCP tool definitions and execution logic.
 - `services/geminiService.ts`: production interpretation adapter.
 - `services/supabaseClient.ts`: authenticated Supabase client boundary.
-- `data/dreamSymbols.ts`: representative cultural glossary entries used for deterministic verification in this public mirror.
+- `data/dreamSymbols.ts`: cultural glossary data used by the public symbol search verification path.
 - `tests/e2e/webmcp.spec.ts`: browser checks for registration, annotations, glossary search, and signed out protection.
 - `docs/webmcp-evals.md`: conversational eval cases.
+- `docs/judging.md`: judge testing instructions for the live application.
 - `docs/provenance.md`: exact challenge provenance and publication boundary.
+- `.env.example`: environment variable template with no secrets.
 - `.github/workflows/webmcp-verify.yml`: repeatable verification.
 - `scripts/check-dashes.mjs`: repository guard that rejects em dash and en dash characters.
 
-The live product uses a larger cultural content catalogue than the representative entries in this mirror. The challenge tool behavior and production service boundary are preserved here.
-
-## Local development
+## Local verification
 
 Prerequisites:
 
@@ -103,14 +105,9 @@ npm run dev
 
 Vite serves the verification app at `http://localhost:3000`.
 
-Optional environment values:
+Copy `.env.example` to your preferred local environment file and add your own development values when testing authenticated flows.
 
-```text
-VITE_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY
-```
-
-Without those values, public glossary search still works and the interpretation tool correctly reports that sign in is required.
+Without Supabase values, the public glossary search still works and the interpretation tool correctly reports that sign in is required.
 
 ## Verification
 
@@ -137,6 +134,8 @@ I dreamed that I was standing at my grandmother's house and a black snake was be
 ```text
 Search my Amaphupho journal for dreams involving water.
 ```
+
+For the quickest judging path, see `docs/judging.md`.
 
 ## Licence
 
